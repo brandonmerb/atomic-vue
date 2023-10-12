@@ -1,0 +1,16 @@
+{
+  "name": "@atomicdesign/atomic-vue",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "author": {
+    "name": "Brandon Erb",
+    "email": "brandom.m.erb@gmail.com"
+  },
+  "dependencies": {
+    "@atomicdesign/atomic-singularity": "1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
