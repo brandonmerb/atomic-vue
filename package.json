@@ -18,6 +18,7 @@
     "build:full": "tsc && tsc-alias"
   },
   "devDependencies": {
+    "@babel/types": "^7.23.0",
     "@swc/cli": "^0.1.62",
     "@swc/core": "^1.3.92",
     "rimraf": "^5.0.5",
@@ -25,9 +26,15 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.2"
   },
+  "main": "dist/src/index.js",
   "files": [
     "dist/**/*.ts",
     "dist/**/*.d.ts",
     "dist/**/*.js"
-  ]
+  ],
+  "peerDependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
+  }
 }
