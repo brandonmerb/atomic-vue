@@ -8,14 +8,13 @@
     "email": "brandom.m.erb@gmail.com"
   },
   "dependencies": {
-    "@atomicdesign/atomic-singularity": "1.0.0"
+    "@atomicdesign/atomic-singularity": "1.0.0",
+    "vue": "^3.3.4"
   },
   "scripts": {
     "clean": "rimraf ./dist",
-    "build": "npm run clean && npm run build:full",
-    "build:common": "npm run clean && npm run build:swc",
-    "build:swc": "swc ./src -d ./dist/src",
-    "build:full": "tsc && tsc-alias"
+    "build": "npm run clean && npm run build:vite",
+    "build:vite": "vite build -c vite.config.ts"
   },
   "devDependencies": {
     "@babel/types": "^7.23.0",
@@ -26,15 +25,16 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.2"
   },
-  "main": "dist/src/index.js",
-  "files": [
-    "dist/**/*.ts",
-    "dist/**/*.d.ts",
-    "dist/**/*.js"
-  ],
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "peerDependencies": {
     "pinia": "^2.1.7",
-    "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   }
 }

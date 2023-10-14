@@ -59,6 +59,8 @@
   // Potentially unnecessary
   // The files we want to include all start in the ./src directory
   "include": [
-    "src",
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "src/**/*.js",
   ],
 }
