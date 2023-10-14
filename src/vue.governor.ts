@@ -46,7 +46,8 @@ export class VueGovernor extends AbstractBaseGovernor<AtomicVueModule> {
    * Mount the Vue Instance onto the page and begin rendering
    */
   public start(): void {
-    this.governorLogger.system("Starting the real Vue Governor")
+    this.governorLogger.system("Starting the real Vue Governor");
+    this.governorLogger.error("No Master Template is configured");
     this.createApp();
   }
 }
