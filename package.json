@@ -29,7 +29,6 @@
     "vite-plugin-dts": "^3.6.0",
     "vite-tsconfig-paths": "^4.2.1"
   },
-  "main": "dist/index.js",
   "exports": {
     ".": {
       "default": "./dist/index.js",
