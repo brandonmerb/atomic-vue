@@ -13,7 +13,6 @@ import swc from 'unplugin-swc'
 // We use Vue in this project, so the compiler needs a way to handle that via plugins
 import vue from '@vitejs/plugin-vue'
 
-
 export default defineConfig((config: ConfigEnv): UserConfig => {
   let plugins = [
     tsconfigPaths(),
