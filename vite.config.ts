@@ -24,7 +24,7 @@ export default defineConfig((config: ConfigEnv): UserConfig => {
     swc.vite({
       configFile: './.swcrc'
     }),
-    vue()
+    vue(),
   ]
 
   return {
@@ -40,12 +40,13 @@ export default defineConfig((config: ConfigEnv): UserConfig => {
         },
         external: [
           "vue",
+          "vue-router",
           "@atomicdesign/atomic-singularity"
         ]
-      }
+      },
+      minify: false
     },
 
-    clearScreen: true,
-    esbuild: false,
+    clearScreen: true
   }
 })
