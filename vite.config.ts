@@ -21,7 +21,7 @@ export default defineConfig((config: ConfigEnv): UserConfig => {
       rollupTypes: true,
     }),
     swc.vite({
-      configFile: './.swcrc'
+      configFile: './.swcrc',
     }),
     vue(),
   ]
@@ -29,13 +29,20 @@ export default defineConfig((config: ConfigEnv): UserConfig => {
   return {
     plugins: plugins,
     build: {
+      lib: {
+        fileName: "atomic-vue",
+        entry: "./src/index.ts",
+        name: "AtomicVue"
+      },
       rollupOptions: {
-        preserveEntrySignatures: 'strict',
-        input: {
-          "index": "./src/index.ts",
-        },
         output: {
-          entryFileNames: '[name].js'
+          // Weird fix that properly imports our CSS. It's okay if this gets
+          // tree shaken out by user's compilers, since the Warning component
+          // should never reach a production view
+          intro: "import './style.css';",
+          globals: {
+            "vue": "Vue",
+          }
         },
         external: [
           "vue",

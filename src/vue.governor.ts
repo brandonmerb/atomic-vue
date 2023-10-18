@@ -115,6 +115,9 @@ export class VueGovernor extends AbstractBaseGovernor<AtomicVueModule> {
    * @returns A Vue Component
    */
   private getMasterTemplateComponent(): VueComponent {
+    // It might be possible to wrap this in an import.meta.env.MODE statement
+    // for tree shaking purposes. Not 100% sure how this would work since this
+    // is technically a library
     return this.masterTemplate ?? warningVue;
   }
 
