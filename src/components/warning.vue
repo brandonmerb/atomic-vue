@@ -1,7 +1,10 @@
 <template>
   <div class="container dynamic-space">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500&display=swap" rel="stylesheet">
     <div class="card-wrapper">
-      <div class="card">
+      <div class="card primary-card">
         <div class="card-title">
           <h2>Atomic Vue</h2>
         </div>
@@ -44,12 +47,13 @@ html, body, .container {
   width: 100vw;
   overflow: hidden;
   margin: 0px;
+  font-family: 'Roboto', sans-serif;
 }
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #242B64
+  background: -webkit-linear-gradient(315deg,#42d392 25%,#647eff);
 }
 .card-wrapper {
   height: 250px;
@@ -57,17 +61,21 @@ html, body, .container {
 }
 .card {
   border: 1px solid #4E5180;
-  border-radius: 5px;
+  border-radius: 8px;
   padding: 12px;
   background-color: #EDEDED;
   margin-left: 8px;
   margin-right: 8px;
+}
+.primary-card {
+  padding: 32px;
 }
 .card-title {
   text-align: center;
   font-size: 1.1em;
 }
 .card-title h2 {
+  margin-top: 0px;
   font-size: 2em;
 }
 .card-footer {
