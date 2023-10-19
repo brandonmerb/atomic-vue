@@ -26,7 +26,7 @@
               Getting Started
             </div>
             <div class="card-text">
-            
+              asdasdasd
             </div>
           </div>
           <div class="card dynamic-space">

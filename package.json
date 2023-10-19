@@ -33,7 +33,7 @@
       "default": "./dist/atomic-vue.js",
       "import": "./dist/atomic-vue.js",
       "types": "./dist/atomic-vue.d.ts",
-      "local": "./src/local.ts"
+      "atomicdesign:local": "./src/index.ts"
     }
   },
   "peerDependencies": {
