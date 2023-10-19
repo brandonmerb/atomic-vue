@@ -30,10 +30,10 @@
   },
   "exports": {
     ".": {
+      "atomicdesign:local": "./src/index.ts",
       "default": "./dist/atomic-vue.js",
       "import": "./dist/atomic-vue.js",
-      "types": "./dist/atomic-vue.d.ts",
-      "atomicdesign:local": "./src/index.ts"
+      "types": "./dist/atomic-vue.d.ts"
     }
   },
   "peerDependencies": {
