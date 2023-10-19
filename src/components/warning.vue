@@ -10,28 +10,28 @@
         </div>
         <div class="card-text">
           If you're seeing this message, that means you haven't installed any
-          modules that contain a master template
+          modules that contain a master template. Here are some useful links to get started!
         </div>
         <div class="card-footer columns">
           <div class="card dynamic-space">
             <div class="card-title">
-              Getting Started
+              🚀 Quick Start
             </div>
             <div class="card-text">
-            
+              Some text here
             </div>
           </div>
           <div class="card dynamic-space">
             <div class="card-title">
-              Getting Started
+              🌌 Singularity Docs
             </div>
             <div class="card-text">
-              asdasdasd
+              
             </div>
           </div>
           <div class="card dynamic-space">
             <div class="card-title">
-              Getting Started
+              🔨 Tools
             </div>
             <div class="card-text">
             </div>
@@ -60,7 +60,7 @@ html, body, .container {
   max-width: 800px;
 }
 .card {
-  border: 1px solid #4E5180;
+  border: 2px solid #4E5180;
   border-radius: 8px;
   padding: 12px;
   background-color: #EDEDED;
@@ -73,6 +73,7 @@ html, body, .container {
 .card-title {
   text-align: center;
   font-size: 1.1em;
+  margin-bottom: 8px;
 }
 .card-title h2 {
   margin-top: 0px;
@@ -84,6 +85,7 @@ html, body, .container {
 .dynamic-space {
   flex-grow: 1;
   flex-shrink: 1;
+  flex-basis: 0px;
 }
 .columns {
   display: flex;
