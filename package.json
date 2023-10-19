@@ -2,7 +2,6 @@
   "name": "@atomicdesign/atomic-vue",
   "version": "1.0.0",
   "description": "",
-  "private": true,
   "type": "module",
   "author": {
     "name": "Brandon Erb",
@@ -13,8 +12,8 @@
   },
   "scripts": {
     "clean": "rimraf ./dist",
-    "build": "npm run clean && npm run build:vite",
-    "build:vite": "vite build -c vite.config.ts"
+    "prebuild": "npm run clean",
+    "build": "vite build -c ./config/vite.config.ts"
   },
   "devDependencies": {
     "@babel/types": "^7.23.0",
@@ -31,9 +30,10 @@
   },
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/atomic-vue.js",
+      "import": "./dist/atomic-vue.js",
+      "types": "./dist/atomic-vue.d.ts",
+      "local": "./src/local.ts"
     }
   },
   "peerDependencies": {

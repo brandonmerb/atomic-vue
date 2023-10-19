@@ -1,0 +1,9 @@
+# Ignore everything by default
+**/*
+
+# Include the dist files, since this is what installers should actually use
+!/dist/**
+
+# Other generic good to have files
+!LICENSE
+!README.MD

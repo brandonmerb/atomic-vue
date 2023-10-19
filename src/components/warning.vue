@@ -38,15 +38,6 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
-import { onBeforeMount } from 'vue';
-import { doNothingHere } from '@atomicdesign/atomic-singularity'
-
-onBeforeMount(() => {
-  doNothingHere();
-})
-
-</script>
 <style>
 html, body, .container {
   height: 100vh;
