@@ -1,8 +1,8 @@
 // Export our types
 export type * from './types'
 
-// Export the governor. This is the core of the package.
-export * from './vue.governor';
+// Export the nebula. This is the core of the package.
+export * from './vue.nebula';
 
 // Helpers
 export * from './helpers';

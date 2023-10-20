@@ -4,11 +4,11 @@ import type { App } from 'vue';
 import type { AtomicVueModule, VueComponent } from "./types";
 
 import warningVue from './components/warning.vue';
-import { AbstractBaseGovernor } from '@atomicdesign/atomic-singularity';
+import { AbstractBaseNebula } from '@atomicdesign/atomic-singularity';
 import { createApp } from 'vue';
 import { createRouter, createWebHashHistory } from "vue-router";
 
-export class VueGovernor extends AbstractBaseGovernor<AtomicVueModule> {
+export class VueNebula extends AbstractBaseNebula<AtomicVueModule> {
   // Master Template that gets mounted
   private masterTemplate?: VueComponent;
 
@@ -24,12 +24,12 @@ export class VueGovernor extends AbstractBaseGovernor<AtomicVueModule> {
   }
 
   /**
-   * Activate a router for the Governor. This method is intended to be used by modules
+   * Activate a router for the Nebula. This method is intended to be used by modules
    * in the event they need to provide a custom router instance. However to do so, they
    * must be loaded before any other routes are loaded
    * @param module The module this is being done for
    * @param customRouter An optional custom router to use
-   * @returns An instance of this governor for daisy chaining
+   * @returns An instance of this nebula for daisy chaining
    */
   public activateRouter(module: AtomicVueModule, customRouter?: Router): this {
     if (customRouter == null) {
@@ -65,7 +65,7 @@ export class VueGovernor extends AbstractBaseGovernor<AtomicVueModule> {
    * with default settings
    * @returns An instance of Vue Router
    */
-  protected activateGovernorItems(module: AtomicVueModule): this {
+  protected activateNebulaItems(module: AtomicVueModule): this {
     return this.activateMasterTemplate(module)
                .activateComponents(module)
                .activateRoutes(module);
@@ -125,12 +125,12 @@ export class VueGovernor extends AbstractBaseGovernor<AtomicVueModule> {
    * Activate the master template contained within this module. This will set it as the default
    * template to render when the application starts
    * @param module The module being activated
-   * @returns An instance of this governor for daisy chaining
+   * @returns An instance of this nebula for daisy chaining
    */
   private activateMasterTemplate(module: AtomicVueModule): this {
     if (!!module.masterTemplate) {
       if (!!this.masterTemplate) {
-        this.governorLogger.warn("Replacing existing master template. Is this correct?");
+        this.nebulaLogger.warn("Replacing existing master template. Is this correct?");
       }
       this.masterTemplate = module.masterTemplate;
     }
@@ -141,8 +141,8 @@ export class VueGovernor extends AbstractBaseGovernor<AtomicVueModule> {
    * Mount the Vue Instance onto the page and begin rendering
    */
   public start(): void {
-    this.governorLogger.system("Starting the real Vue Governor");
-    this.governorLogger.error("No Master Template is configured");
+    this.nebulaLogger.system("Starting the real Vue Nebula");
+    this.nebulaLogger.error("No Master Template is configured");
     this.getVueApp().mount("#app");
   }
 }
