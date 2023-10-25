@@ -1,4 +1,4 @@
-import { AsyncActivationFunction, AtomicNebulaInterface, AtomicSingularitySystem, ExecutorFunction, LoggingMiddleware, MiddlewareUseFunction } from "@atomicdesign/atomic-singularity"
+import { AtomicNebulaInterface, AtomicSingularitySystem, LoggingMiddleware } from "@atomicdesign/atomic-singularity"
 import type { RouteRecordRaw, Router } from 'vue-router';
 import type { App } from 'vue';
 import type { AtomicVueNebula, VueComponent } from "./types";
@@ -21,6 +21,10 @@ export class VueNebula implements AtomicVueNebula {
 
   async onModuleActivation(nebula: AtomicNebulaInterface): Promise<boolean> {
     return new Promise((resolve, reject) => {
+      if (nebula == null) {
+        reject("Nebula was not defined");
+        return false;
+      }
       if (nebula.disabled === true) {
         reject(`${nebula.name} is disabled`);
       }
