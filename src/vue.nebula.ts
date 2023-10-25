@@ -1,27 +1,46 @@
-import type { AtomicSingularitySystem } from "@atomicdesign/atomic-singularity"
+import { AsyncActivationFunction, AtomicNebulaInterface, AtomicSingularitySystem, ExecutorFunction, LoggingMiddleware, MiddlewareUseFunction } from "@atomicdesign/atomic-singularity"
 import type { RouteRecordRaw, Router } from 'vue-router';
 import type { App } from 'vue';
-import type { AtomicVueModule, VueComponent } from "./types";
+import type { AtomicVueNebula, VueComponent } from "./types";
 
 import warningVue from './components/warning.vue';
-import { AbstractBaseNebula } from '@atomicdesign/atomic-singularity';
 import { createApp } from 'vue';
 import { createRouter, createWebHashHistory } from "vue-router";
 
-export class VueNebula extends AbstractBaseNebula<AtomicVueModule> {
-  // Master Template that gets mounted
-  private masterTemplate?: VueComponent;
+export class VueNebula implements AtomicVueNebula {
+  public name: string = "Atomic Vue";
 
   // Router instance
   private router?: Router;
-  // private routes?: Array<RouteRecordRaw> = [];
 
   // App instance, but maybe not necessary
   public vueApp: App<Element>;
 
-  constructor(app: AtomicSingularitySystem) {
-    super(app, "AtomicVue")
+  // Master Template that gets mounted
+  private _masterTemplate?: VueComponent;
+
+  async onModuleActivation(nebula: AtomicNebulaInterface): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (nebula.disabled === true) {
+        reject(`${nebula.name} is disabled`);
+      }
+      this.activateMasterTemplate(nebula)
+          .activateComponents(nebula)
+          .activateRoutes(nebula);
+      resolve(true);
+    });
   }
+
+  public onStarted(app: AtomicSingularitySystem, nebula: AtomicNebulaInterface): boolean {
+    const logger = LoggingMiddleware.instance.getLogger();
+
+    logger.system("Starting the real Vue Nebula");
+    logger.error("No Master Template is configured");
+    this.getVueApp().mount("#app");
+
+    return true;
+  }
+
 
   /**
    * Activate a router for the Nebula. This method is intended to be used by modules
@@ -31,7 +50,7 @@ export class VueNebula extends AbstractBaseNebula<AtomicVueModule> {
    * @param customRouter An optional custom router to use
    * @returns An instance of this nebula for daisy chaining
    */
-  public activateRouter(module: AtomicVueModule, customRouter?: Router): this {
+  public activateRouter(module: AtomicVueNebula, customRouter?: Router): this {
     if (customRouter == null) {
       // No router provided, so we'll just instantiate our own, with default routes if provided
       this.router = createRouter({
@@ -60,24 +79,13 @@ export class VueNebula extends AbstractBaseNebula<AtomicVueModule> {
     return this.router;
   }
 
-  /**
-   * Returns the current Vue Router if there is one. Otherwise it will insantiate a new one
-   * with default settings
-   * @returns An instance of Vue Router
-   */
-  protected activateNebulaItems(module: AtomicVueModule): this {
-    return this.activateMasterTemplate(module)
-               .activateComponents(module)
-               .activateRoutes(module);
-  }
-
 
   /**
    * Registers all routes provided within the module with the Vue Router. If no router has been
    * created yet, it will automatically create one
    * @returns An instance of Vue Router
    */
-  protected activateRoutes(module: AtomicVueModule): this {
+  protected activateRoutes(module: AtomicVueNebula): this {
     if (this.router == null) {
       return this.activateRouter(module);
     } else {
@@ -91,7 +99,7 @@ export class VueNebula extends AbstractBaseNebula<AtomicVueModule> {
    * doing this where possible to avoid performance overhead
    * @returns An instance of Vue Router
    */
-  protected activateComponents(module: AtomicVueModule): this {
+  protected activateComponents(module: AtomicVueNebula): this {
     module.components?.forEach((component) => this.getVueApp().component(component.name, component));
     return this;
   }
@@ -118,7 +126,7 @@ export class VueNebula extends AbstractBaseNebula<AtomicVueModule> {
     // It might be possible to wrap this in an import.meta.env.MODE statement
     // for tree shaking purposes. Not 100% sure how this would work since this
     // is technically a library
-    return this.masterTemplate ?? warningVue;
+    return this._masterTemplate ?? warningVue;
   }
 
   /**
@@ -127,22 +135,15 @@ export class VueNebula extends AbstractBaseNebula<AtomicVueModule> {
    * @param module The module being activated
    * @returns An instance of this nebula for daisy chaining
    */
-  private activateMasterTemplate(module: AtomicVueModule): this {
+  private activateMasterTemplate(module: AtomicVueNebula): this {
     if (!!module.masterTemplate) {
-      if (!!this.masterTemplate) {
-        this.nebulaLogger.warn("Replacing existing master template. Is this correct?");
+      if (!!this._masterTemplate) {
+        LoggingMiddleware.instance
+          .getLogger()
+          .warn("Replacing existing master template. Is this correct?");
       }
-      this.masterTemplate = module.masterTemplate;
+      this._masterTemplate = module.masterTemplate;
     }
     return this;
-  }
-
-  /**
-   * Mount the Vue Instance onto the page and begin rendering
-   */
-  public start(): void {
-    this.nebulaLogger.system("Starting the real Vue Nebula");
-    this.nebulaLogger.error("No Master Template is configured");
-    this.getVueApp().mount("#app");
   }
 }

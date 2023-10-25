@@ -3,7 +3,7 @@ import { VueNebula } from "./vue.nebula";
 
 export function useAtomicVue(): MiddlewareUseFunction {
   return (app: AtomicSingularitySystem) => {
-    app.setNebula(new VueNebula(app));
-    return true;
+    // app.setNebula(new VueNebula(app));
+    // return true;
   }
 }

@@ -1,4 +1,4 @@
-import type { AtomicModuleInterface } from '@atomicdesign/atomic-singularity';
+import type { AtomicNebulaInterface } from '@atomicdesign/atomic-singularity';
 import type { Component, ComputedOptions, MethodOptions } from 'vue';
 import type { RouteRecordRaw } from 'vue-router';
 
@@ -11,7 +11,7 @@ export interface VueComponentDeclaration {
   component: VueComponent
 }
 
-export interface AtomicVueModule extends AtomicModuleInterface {
+export interface AtomicVueNebula extends AtomicNebulaInterface {
   /**
    * These are component declarations that will be loaded into Vue as
    * the corresponding name given. These are basically a wrapper around Vue.component.
