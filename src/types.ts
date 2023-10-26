@@ -31,4 +31,9 @@ export interface AtomicVueNebula extends AtomicNebulaInterface {
    * across a project. If more than one is defined, we'll prioritize the last one loaded
    */
   masterTemplate?: VueComponent;
+
+  /**
+   * 
+   */
+  vuePlugins?: Array<any>
 }

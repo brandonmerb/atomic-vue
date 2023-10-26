@@ -19,7 +19,7 @@ export class VueNebula implements AtomicVueNebula {
   // Master Template that gets mounted
   private _masterTemplate?: VueComponent;
 
-  async onModuleActivation(nebula: AtomicNebulaInterface): Promise<boolean> {
+  async onModuleActivation(nebula: AtomicVueNebula): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (nebula == null) {
         reject("Nebula was not defined");
@@ -28,7 +28,21 @@ export class VueNebula implements AtomicVueNebula {
       if (nebula.disabled === true) {
         reject(`${nebula.name} is disabled`);
       }
-      this.activateMasterTemplate(nebula)
+      this.activateMasterTemplate(nebula);
+      resolve(true);
+    });
+  }
+
+  async afterModuleActivation(nebula: AtomicVueNebula): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (nebula == null) {
+        reject("Nebula was not defined");
+        return false;
+      }
+      if (nebula.disabled === true) {
+        reject(`${nebula.name} is disabled`);
+      }
+      this.activateVuePlugins(nebula)
           .activateComponents(nebula)
           .activateRoutes(nebula);
       resolve(true);
@@ -39,7 +53,9 @@ export class VueNebula implements AtomicVueNebula {
     const logger = LoggingMiddleware.instance.getLogger();
 
     logger.system("Starting the real Vue Nebula");
-    logger.error("No Master Template is configured");
+    if (!this._masterTemplate) {
+      logger.error("No Master Template is configured");
+    }
     this.getVueApp().mount("#app");
 
     return true;
@@ -105,6 +121,14 @@ export class VueNebula implements AtomicVueNebula {
    */
   protected activateComponents(module: AtomicVueNebula): this {
     module.components?.forEach((component) => this.getVueApp().component(component.name, component));
+    return this;
+  }
+
+  protected activateVuePlugins(module: AtomicVueNebula): this {
+    if (this.router) {
+      this.getVueApp().use(this.router);
+    }
+    module.vuePlugins?.forEach((plugin) => this.getVueApp().use(plugin));
     return this;
   }
 
