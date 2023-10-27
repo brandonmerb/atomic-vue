@@ -1,5 +1,5 @@
 import { AtomicNebulaInterface, AtomicSingularitySystem, LoggingMiddleware } from "@atomicdesign/atomic-singularity"
-import type { RouteRecordRaw, Router } from 'vue-router';
+import { RouteRecordRaw, Router, createWebHistory } from 'vue-router';
 import type { App } from 'vue';
 import type { AtomicVueNebula, VueComponent } from "./types";
 
@@ -12,6 +12,7 @@ export class VueNebula implements AtomicVueNebula {
 
   // Router instance
   private router?: Router;
+  private activatedRouter = false;
 
   // App instance, but maybe not necessary
   public vueApp: App<Element>;
@@ -42,9 +43,10 @@ export class VueNebula implements AtomicVueNebula {
       if (nebula.disabled === true) {
         reject(`${nebula.name} is disabled`);
       }
-      this.activateVuePlugins(nebula)
-          .activateComponents(nebula)
-          .activateRoutes(nebula);
+      this.activateRoutes(nebula)
+          .activateVuePlugins(nebula)
+          .activateComponents(nebula);
+
       resolve(true);
     });
   }
@@ -74,7 +76,7 @@ export class VueNebula implements AtomicVueNebula {
     if (customRouter == null) {
       // No router provided, so we'll just instantiate our own, with default routes if provided
       this.router = createRouter({
-        history: createWebHashHistory("/"),
+        history: createWebHistory("/"),
         routes: module.routes ?? []
       })
     } else {
@@ -92,7 +94,7 @@ export class VueNebula implements AtomicVueNebula {
   protected getRouter(): Router {
     if (this.router == null) {
       this.router = createRouter({
-        history: createWebHashHistory("/"),
+        history: createWebHistory("/"),
         routes: []
       })
     }
@@ -106,12 +108,14 @@ export class VueNebula implements AtomicVueNebula {
    * @returns An instance of Vue Router
    */
   protected activateRoutes(module: AtomicVueNebula): this {
-    if (this.router == null) {
-      return this.activateRouter(module);
-    } else {
-      module.routes?.forEach((route) => this.getRouter().addRoute(route));
-      return this;
+    if (module.routes) {
+      if (this.router == null) {
+        return this.activateRouter(module);
+      } else {
+        module.routes?.forEach((route) => this.getRouter().addRoute(route));
+      }
     }
+    return this;
   }
 
   /**
@@ -125,8 +129,9 @@ export class VueNebula implements AtomicVueNebula {
   }
 
   protected activateVuePlugins(module: AtomicVueNebula): this {
-    if (this.router) {
+    if (this.router && this.activatedRouter === false) {
       this.getVueApp().use(this.router);
+      this.activatedRouter = true;
     }
     module.vuePlugins?.forEach((plugin) => this.getVueApp().use(plugin));
     return this;
