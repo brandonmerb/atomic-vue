@@ -74,7 +74,7 @@ onBeforeMount(() => {
   generateStars();
 });
 </script>
-<style>
+<style scoped>
 html,
 body,
 .container {
