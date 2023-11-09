@@ -5,7 +5,7 @@ import type { AtomicVueNebula, VueComponent } from "./types";
 
 import warningVue from './components/warning.vue';
 import { createApp } from 'vue';
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter } from "vue-router";
 
 export class VueNebula implements AtomicVueNebula {
   public name: string = "Atomic Vue";

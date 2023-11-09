@@ -39,7 +39,7 @@ export default defineConfig((config: ConfigEnv): UserConfig => {
           // Weird fix that properly imports our CSS. It's okay if this gets
           // tree shaken out by user's compilers, since the Warning component
           // should never reach a production view
-          intro: "import './style.css';",
+          // intro: "import './style.css';",
           globals: {
             "vue": "Vue",
           }
