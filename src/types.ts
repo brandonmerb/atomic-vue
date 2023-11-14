@@ -11,7 +11,7 @@ export interface VueComponentDeclaration {
   component: VueComponent
 }
 
-export interface AtomicVueNebula extends AtomicNebulaInterface {
+export interface AtomicVueNebula<ConfigurationType = {}> extends AtomicNebulaInterface<ConfigurationType> {
   /**
    * These are component declarations that will be loaded into Vue as
    * the corresponding name given. These are basically a wrapper around Vue.component.
